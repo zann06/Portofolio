@@ -54,7 +54,8 @@ site; no component changes needed.
 Pushing to `main` triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml),
 which builds with `VITE_BASE=/Portofolio/` and publishes to GitHub Pages.
 
-To enable it: **Settings → Pages → Source: GitHub Actions**.
+To enable it once: **Settings → Pages → Source: GitHub Actions**. After that,
+every push to `main` redeploys automatically.
 
 Deploying elsewhere (Vercel, Netlify, Cloudflare)? Leave `VITE_BASE` unset — it
 defaults to `/` and works as-is.
