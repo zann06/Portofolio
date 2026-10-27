@@ -84,6 +84,19 @@ export const projects: Project[] = [
     link: "https://github.com/arul-hue/TubesStima_DOAIBU",
     featured: true,
   },
+  {
+    id: "p4",
+    title: "MindMesh",
+    subtitle: "Local-first knowledge universe & quiz app",
+    description:
+      "A local-first study web app that turns reading material into an explorable, evidence-backed knowledge universe — import PDFs or Markdown, curate concepts and relationships that carry source references, explore the graph in 3D, and practice with a rule-based quiz engine. Runs entirely in the browser on IndexedDB, with optional AI assistance off by default.",
+    category: "IT",
+    tags: ["TypeScript", "Local-first", "WebGL"],
+    year: "2026",
+    coverImage: "/projects/p4-mindmesh.jpg",
+    link: "https://zann06.github.io/MindMesh/",
+    featured: true,
+  },
   // ── Mini Proyek (smaller side projects) ─────────────────────────────────
   {
     id: "mp1",
