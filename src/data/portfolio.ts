@@ -309,6 +309,18 @@ export const skills: Skill[] = [
 // will render each one as the card's cover photo automatically.
 export const certificates: Certificate[] = [
   {
+    id: "c19",
+    title: "Agentless Threat Emulation with AttackIQ Flex v3",
+    issuer: "AttackIQ Academy",
+    year: "2026",
+    category: "IT",
+    description:
+      "AttackIQ Academy course on agentless threat emulation using AttackIQ Flex — safely emulating adversary threat behaviors in a controlled environment without deploying agents. Completion earns 1 CPE credit.",
+    image: "/certificates/attackiq-agentless-threat-emulation.jpg",
+    verificationUrl:
+      "https://www.academy.attackiq.com/certificates/certificate-template?resource=13974&type=course&title=Agentless%20Threat%20Emulation%20with%20AttackIQ%20Flex%20v3&cert_id=6711",
+  },
+  {
     id: "c1",
     title: "HCIA-Security V4.0 Course",
     issuer: "Huawei ICT Academy",
