@@ -97,6 +97,19 @@ export const projects: Project[] = [
     link: "https://zann06.github.io/MindMesh/",
     featured: true,
   },
+  {
+    id: "p5",
+    title: "TinyWorld",
+    subtitle: "Browser-based 3D exploration game",
+    description:
+      "An open-source 3D exploration game that runs entirely in the browser — three procedurally generated islands with 26 interactive landmarks, a five-step discovery campaign, a day/night cycle, and photo mode, all rendered with WebGL 2 via Three.js. No downloads or bundled art assets, with hybrid keyboard/mouse and touch controls.",
+    category: "IT",
+    tags: ["TypeScript", "Three.js", "Procedural Generation"],
+    year: "2026",
+    coverImage: "/projects/p5-tinyworld.jpg",
+    link: "https://zann06.github.io/TinyWorld/",
+    featured: true,
+  },
   // ── Mini Proyek (smaller side projects) ─────────────────────────────────
   {
     id: "mp1",
