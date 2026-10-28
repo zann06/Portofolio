@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import type { Variants } from "framer-motion"
-import { IdentityCard3D } from "@/components/portfolio/IdentityCard3D"
+import { Laptop3D } from "@/components/portfolio/Laptop3D"
 import { asset } from "@/lib/utils"
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -67,13 +67,15 @@ export function About() {
                 variants={itemVariants}
                 className="flex flex-col gap-6"
               >
-                {/* Profile Image as a floating 3D ID badge */}
-                <IdentityCard3D
-                  image={asset("/fauzan.jpg")}
-                  alt="Farid Rizky Fauzan"
-                  name="Farid Rizky Fauzan"
-                  title="Developer & Esports Manager"
-                />
+                {/* Portrait inside the desk-buddy laptop scene — extra bottom
+                    room so the popped-out video-call window never overlaps
+                    the card below */}
+                <div className="pb-8">
+                  <Laptop3D
+                    image={asset("/fauzan.jpg")}
+                    alt="Farid Rizky Fauzan"
+                  />
+                </div>
 
                 {/* Profile Card */}
                 <div className="border border-border rounded-2xl p-6 bg-card">
