@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { FormEvent } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Mail, MapPin, Send, CheckCircle2 } from "lucide-react"
+import { motion } from "framer-motion"
+import { Mail, MapPin, Send } from "lucide-react"
 import { toast } from "sonner"
 import { GithubIcon, LinkedinIcon } from "@/components/portfolio/SocialIcons"
 
@@ -33,19 +33,17 @@ export function Contact() {
     email: "",
     message: "",
   })
-  const [sending, setSending] = useState(false)
-  const [sent, setSent] = useState(false)
 
+  // Static site with no inbox backend, so submit hands off to the visitor's
+  // mail client with everything pre-filled to the real address.
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSending(true)
-    setTimeout(() => {
-      setSending(false)
-      setSent(true)
-      setFormData({ name: "", email: "", message: "" })
-      toast.success("Message sent! I'll get back to you soon.")
-      setTimeout(() => setSent(false), 2500)
-    }, 1200)
+    const subject = encodeURIComponent(`Portfolio message from ${formData.name}`)
+    const body = encodeURIComponent(
+      `${formData.message}\n\n— ${formData.name} (${formData.email})`
+    )
+    window.location.href = `mailto:fauzan.faridrizky@gmail.com?subject=${subject}&body=${body}`
+    toast.success("Opening your email app with the message pre-filled.")
   }
 
   return (
@@ -167,36 +165,16 @@ export function Contact() {
               </div>
               <motion.button
                 type="submit"
-                disabled={sending}
-                whileHover={{ scale: sent ? 1 : 1.01 }}
-                whileTap={{ scale: sent ? 1 : 0.99 }}
-                animate={sent ? { backgroundColor: "var(--emerald-600, #059669)" } : {}}
-                className="inline-flex items-center gap-2 bg-foreground text-primary-foreground px-6 py-3 rounded-full text-sm font-medium hover:bg-foreground/80 transition-colors disabled:opacity-50"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className="inline-flex items-center gap-2 bg-foreground text-primary-foreground px-6 py-3 rounded-full text-sm font-medium hover:bg-foreground/80 transition-colors"
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  {sent ? (
-                    <motion.span
-                      key="sent"
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
-                      className="inline-flex items-center gap-2"
-                    >
-                      Sent <CheckCircle2 className="size-4" />
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="idle"
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
-                      className="inline-flex items-center gap-2"
-                    >
-                      {sending ? "Sending..." : "Send Message"} <Send className="size-4" />
-                    </motion.span>
-                  )}
-                </AnimatePresence>
+                Send Message <Send className="size-4" />
               </motion.button>
+              <p className="text-xs text-muted-foreground">
+                Submitting opens your email app with everything pre-filled to
+                fauzan.faridrizky@gmail.com.
+              </p>
             </form>
           </div>
         </motion.div>

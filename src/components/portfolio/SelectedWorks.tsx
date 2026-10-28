@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence, useMotionValue, animate, type PanInfo } from "framer-motion"
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react"
 import { projects, type Category } from "@/data/portfolio"
 import { asset } from "@/lib/utils"
 
@@ -61,6 +61,7 @@ function matchesFilter(category: Category, filter: Filter): boolean {
 export function SelectedWorks() {
   const [activeFilter, setActiveFilter] = useState<Filter>("ALL")
   const [active, setActive] = useState(0)
+  const [selected, setSelected] = useState<ProjectWithCover | null>(null)
   const dragX = useMotionValue(0)
   const breakpoint = useBreakpoint()
   const { cardWidth, stageHeight, stepX, stepRotate, visibleDepth } = STAGE_CONFIG[breakpoint]
@@ -68,6 +69,16 @@ export function SelectedWorks() {
   const filtered = (projects as ProjectWithCover[]).filter((p) =>
     matchesFilter(p.category, activeFilter)
   )
+
+  // Close the detail dialog on Escape so keyboard users aren't trapped
+  useEffect(() => {
+    if (!selected) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelected(null)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [selected])
 
   function changeFilter(filter: Filter) {
     setActiveFilter(filter)
@@ -202,10 +213,8 @@ export function SelectedWorks() {
                         setActive(index)
                         return
                       }
-                      // Already focused — a click here means "open it".
-                      if (project.link) {
-                        window.open(project.link, "_blank", "noopener,noreferrer")
-                      }
+                      // Already focused — a click here opens the detail dialog.
+                      setSelected(project)
                     }}
                     whileHover={isActive ? { y: -4 } : undefined}
                   >
@@ -339,6 +348,99 @@ export function SelectedWorks() {
           </div>
         )}
       </div>
+
+      {/* Detail Dialog */}
+      <AnimatePresence>
+        {selected && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selected.title}
+          >
+            <div
+              className="absolute inset-0 bg-foreground/30 backdrop-blur-sm"
+              onClick={() => setSelected(null)}
+            />
+            <motion.div
+              className="relative w-full max-w-2xl bg-card border border-border rounded-2xl overflow-hidden shadow-xl"
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: EASE }}
+            >
+              {/* Visual */}
+              <div
+                className={`relative aspect-[16/8] overflow-hidden ${
+                  selected.category === "IT"
+                    ? "bg-gradient-to-br from-it/20 via-card to-it/5"
+                    : selected.category === "ESPORTS"
+                      ? "bg-gradient-to-br from-esports/20 via-card to-esports/5"
+                      : "bg-gradient-to-br from-it/15 via-card to-esports/15"
+                }`}
+              >
+                {selected.coverImage ? (
+                  <img
+                    src={asset(selected.coverImage)}
+                    alt={selected.title}
+                    className="absolute inset-0 size-full object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="font-mono text-7xl font-bold tracking-tighter text-foreground/10">
+                      {selected.title.charAt(0)}
+                    </span>
+                  </div>
+                )}
+                <button
+                  onClick={() => setSelected(null)}
+                  aria-label="Close"
+                  className="absolute top-4 right-4 size-8 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-muted text-muted-foreground">
+                    {selected.category === "BOTH" ? "IT + ESPORTS" : selected.category}
+                  </span>
+                  <span className="text-xs text-muted-foreground">{selected.year}</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-1">{selected.title}</h3>
+                <div className="text-sm text-muted-foreground mb-4">{selected.subtitle}</div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                  {selected.description}
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {selected.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 text-xs font-medium rounded-md bg-muted text-muted-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                {selected.link && (
+                  <button
+                    onClick={() => window.open(selected.link, "_blank", "noopener,noreferrer")}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+                  >
+                    {selected.link.includes("github.com") ? "View on GitHub" : "Visit live site"}
+                    <ExternalLink className="size-4" />
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

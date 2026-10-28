@@ -110,6 +110,19 @@ export const projects: Project[] = [
     link: "https://zann06.github.io/TinyWorld/",
     featured: true,
   },
+  {
+    id: "p6",
+    title: "CipherLab",
+    subtitle: "Interactive block cipher cryptography lab",
+    description:
+      "A web-based cryptography laboratory built for a university Cryptography & Information Security course — a custom 16-bit Feistel block cipher with ECB, CBC, and CTR modes, step-by-step round tracing with HEX/BIN block inspection and key-schedule walkthroughs, plus instant PDF practicum reports via ReportLab. Built with Streamlit and covered by pytest test suites.",
+    category: "IT",
+    tags: ["Python", "Cryptography", "Streamlit"],
+    year: "2026",
+    coverImage: "/projects/p6-cipherlab.jpg",
+    link: "https://github.com/zann06/Enskripsi-Block-Cipher",
+    featured: true,
+  },
   // ── Mini Proyek (smaller side projects) ─────────────────────────────────
   {
     id: "mp1",

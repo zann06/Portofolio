@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowDown } from "lucide-react"
+import { ArrowDown, Download } from "lucide-react"
 import { Laptop3D } from "@/components/portfolio/Laptop3D"
 import { asset } from "@/lib/utils"
 
@@ -131,7 +131,7 @@ export function Hero({ activeIdentity }: HeroProps) {
           </motion.p>
 
           {/* CTA */}
-          <motion.div variants={itemVariants} className="flex gap-4 mt-10">
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 mt-10">
             <motion.button
               onClick={() => document.querySelector("#works")?.scrollIntoView({ behavior: "smooth" })}
               className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-colors ${
@@ -152,6 +152,15 @@ export function Hero({ activeIdentity }: HeroProps) {
             >
               Get in Touch
             </motion.button>
+            <motion.a
+              href={asset("/cv/farid-rizky-fauzan-cv.pdf")}
+              download="Farid-Rizky-Fauzan-CV.pdf"
+              className="inline-flex items-center gap-2 border border-border text-foreground px-6 py-3 rounded-full text-sm font-medium hover:bg-muted transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Download CV <Download className="size-4" />
+            </motion.a>
           </motion.div>
 
           {/* Stats */}
