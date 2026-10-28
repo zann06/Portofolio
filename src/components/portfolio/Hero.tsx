@@ -191,7 +191,7 @@ export function Hero({ activeIdentity }: HeroProps) {
             className="relative hidden lg:block"
           >
             <Suspense fallback={<div className="aspect-[5/4] w-full animate-pulse rounded-2xl bg-muted/40" />}>
-              <IslandScene />
+              <IslandScene identity={activeIdentity} />
             </Suspense>
             <div className="pointer-events-none absolute -top-4 -right-4 flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-lg backdrop-blur-md">
               <span
