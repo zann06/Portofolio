@@ -1,8 +1,11 @@
-import { useRef } from "react"
+import { lazy, Suspense, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowDown, Download } from "lucide-react"
-import { Laptop3D } from "@/components/portfolio/Laptop3D"
+import { ArrowDown, ArrowUpRight, Download } from "lucide-react"
 import { asset } from "@/lib/utils"
+
+// three.js (+R3F) is ~600KB, so the island loads as its own chunk after the
+// page is interactive — the hero renders instantly with a quiet placeholder.
+const IslandScene = lazy(() => import("@/components/portfolio/IslandScene"))
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -187,22 +190,29 @@ export function Hero({ activeIdentity }: HeroProps) {
             transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
             className="relative hidden lg:block"
           >
-            <Laptop3D
-              image={asset("/farid.jpg")}
-              alt="Farid Rizky Fauzan"
-              identity={activeIdentity}
-            />
-            <div className="absolute -bottom-5 -left-5 rounded-xl border border-border bg-card/90 px-4 py-3 shadow-xl backdrop-blur-md">
-              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Current focus</div>
-              <div className="mt-1 text-sm font-semibold text-foreground">
-                {activeIdentity === "IT" ? "Digital products" : "Competitive teams"}
-              </div>
-            </div>
-            <div className="absolute -top-4 -right-4 flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-lg backdrop-blur-md">
+            <Suspense fallback={<div className="aspect-[5/4] w-full animate-pulse rounded-2xl bg-muted/40" />}>
+              <IslandScene />
+            </Suspense>
+            <div className="pointer-events-none absolute -top-4 -right-4 flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-lg backdrop-blur-md">
               <span
                 className={`size-1.5 rounded-full ${activeIdentity === "IT" ? "bg-it" : "bg-esports"}`}
               />
               Available for selected work
+            </div>
+            <div className="absolute -bottom-5 -left-5">
+              <div className="rounded-xl border border-border bg-card/90 px-4 py-3 shadow-xl backdrop-blur-md">
+                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Drag to orbit
+                </div>
+                <a
+                  href="https://zann06.github.io/TinyWorld/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-muted-foreground transition-colors"
+                >
+                  From TinyWorld — open demo <ArrowUpRight className="size-3.5" />
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>
