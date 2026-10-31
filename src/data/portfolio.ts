@@ -176,6 +176,18 @@ export const projects: Project[] = [
     link: "https://trade-two-ruby.vercel.app/",
     featured: false,
   },
+  {
+    id: "mp5",
+    title: "Web Prodi Teknologi Industri Pangan",
+    subtitle: "Collaborative website integration for the study program",
+    description:
+      "A collaborative engagement to help integrate the official website of the Teknologi Industri Pangan (Food Industry Technology) study program — hands-on web work done together with the program's team.",
+    category: "IT",
+    tags: ["Web Integration", "Collaboration"],
+    year: "2026",
+    coverImage: "/projects/mp5-tip-web.jpg",
+    featured: false,
+  },
 ]
 
 export const experiences: Experience[] = [
