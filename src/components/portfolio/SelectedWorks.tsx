@@ -212,7 +212,7 @@ export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
                       opacity: 1 - depth * 0.32,
                       zIndex: 20 - depth,
                     }}
-                    transition={{ duration: 0.55, ease: EASE }}
+                    transition={{ type: "spring", stiffness: 220, damping: 28 }}
                     onClick={() => {
                       // Not the focused card yet — first click just brings it
                       // to the center, same as before.

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { useLang, bi, type Lang } from "@/lib/i18n"
+import { scrollToSection, scrollToTop } from "@/lib/smooth-scroll"
 
 interface NavbarProps {
   activeIdentity: "IT" | "ESPORTS"
@@ -88,8 +89,7 @@ export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
 
   const handleLink = (href: string) => {
     setMenuOpen(false)
-    const el = document.querySelector(href)
-    el?.scrollIntoView({ behavior: "smooth" })
+    scrollToSection(href)
   }
 
   return (
@@ -109,7 +109,7 @@ export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
               href="#"
               onClick={(e) => {
                 e.preventDefault()
-                window.scrollTo({ top: 0, behavior: "smooth" })
+                scrollToTop()
               }}
               className="font-semibold text-sm tracking-tight text-foreground"
               whileHover={{ opacity: 0.7 }}

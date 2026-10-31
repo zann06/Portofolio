@@ -1,7 +1,8 @@
 import { lazy, Suspense, useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 import { ArrowDown, ArrowUpRight, Download } from "lucide-react"
 import { useLang, bi } from "@/lib/i18n"
+import { scrollToSection } from "@/lib/smooth-scroll"
 import { asset } from "@/lib/utils"
 
 // three.js (+R3F) is ~600KB, so the island loads as its own chunk after the
@@ -40,12 +41,15 @@ export function Hero({ activeIdentity }: HeroProps) {
     target: ref,
     offset: ["start start", "end start"],
   })
-  const y = useTransform(scrollYProgress, [0, 1], [0, 120])
+  // Spring-smoothed parallax so the hero drifts instead of tracking 1:1.
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [0, 120]), {
+    stiffness: 90,
+    damping: 28,
+    mass: 0.6,
+  })
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
-  const scrollToAbout = () => {
-    document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })
-  }
+  const scrollToAbout = () => scrollToSection("#about")
 
   return (
     <section
@@ -144,7 +148,7 @@ export function Hero({ activeIdentity }: HeroProps) {
           {/* CTA */}
           <motion.div variants={itemVariants} className="flex flex-wrap gap-4 mt-10">
             <motion.button
-              onClick={() => document.querySelector("#works")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => scrollToSection("#works")}
               className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-colors ${
                 activeIdentity === "IT"
                   ? "bg-it text-white hover:bg-it/85"
@@ -156,7 +160,7 @@ export function Hero({ activeIdentity }: HeroProps) {
               {t(bi("View My Work", "Lihat Karya Saya"))}
             </motion.button>
             <motion.button
-              onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => scrollToSection("#contact")}
               className="inline-flex items-center gap-2 border border-border text-foreground px-6 py-3 rounded-full text-sm font-medium hover:bg-muted transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

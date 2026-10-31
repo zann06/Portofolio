@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { ArrowUp, Mail } from "lucide-react"
 import { useLang, bi } from "@/lib/i18n"
+import { scrollToTop } from "@/lib/smooth-scroll"
 import { GithubIcon, LinkedinIcon } from "@/components/portfolio/SocialIcons"
 
 // lucide-react dropped brand/logo icons (Instagram included), so this one is
@@ -32,8 +33,8 @@ const socialLinks = [
 
 export function Footer() {
   const { t } = useLang()
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
+  const scrollToTopHandler = () => {
+    scrollToTop()
   }
 
   return (
@@ -71,7 +72,7 @@ export function Footer() {
 
           {/* Back to top */}
           <motion.button
-            onClick={scrollToTop}
+            onClick={scrollToTopHandler}
             whileHover={{ y: -2 }}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >

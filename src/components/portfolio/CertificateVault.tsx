@@ -240,7 +240,7 @@ export function CertificateVault({ identity }: { identity: "IT" | "ESPORTS" }) {
                       opacity: 1 - depth * 0.32,
                       zIndex: 20 - depth,
                     }}
-                    transition={{ duration: 0.55, ease: EASE }}
+                    transition={{ type: "spring", stiffness: 220, damping: 28 }}
                     onClick={() => (isActive ? setSelected(cert) : setActive(index))}
                     whileHover={isActive ? { y: -4 } : undefined}
                   >
