@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { experiences, type Category } from "@/data/portfolio"
+import { Medal, Trophy } from "lucide-react"
+import { esportsAchievements, experiences, type Category } from "@/data/portfolio"
 import { useLang, bi } from "@/lib/i18n"
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -127,6 +128,70 @@ export function Experience() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Coaching & management achievements — the esports side's hard
+           results: what the teams Farid develops actually won. */}
+        {activeFilter !== "IT" && (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55 }}
+            className="mt-16 rounded-2xl border border-border bg-card p-6 md:p-8"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-esports/10 text-esports">
+                <Trophy className="size-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-foreground">
+                  {t(bi("Coaching & Management Achievements", "Prestasi Pembinaan & Manajemen"))}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  {t(bi(
+                    "Team results under Farid's development as Head of Department & Manager — 2026 season.",
+                    "Hasil tim binaan Farid sebagai Kepala Departemen & Manager — musim 2026."
+                  ))}
+                </p>
+              </div>
+            </div>
+
+            <ul className="mt-6 divide-y divide-border">
+              {esportsAchievements.map((a, i) => (
+                <motion.li
+                  key={a.id}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                  className="flex flex-wrap items-center gap-x-4 gap-y-2 py-4"
+                >
+                  <span
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${
+                      a.rank === 1
+                        ? "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                        : "border-border bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {a.rank === 1 ? <Trophy className="size-3.5" /> : <Medal className="size-3.5" />}
+                    {t(a.placement)}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-sm font-medium text-foreground">
+                      {t(a.tournament)}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {a.game} · {t(bi("Online", "Daring"))}
+                    </div>
+                  </div>
+                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                    {t(a.date)}
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
       </div>
     </section>
   )

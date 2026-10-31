@@ -276,6 +276,7 @@ export const experiences: Experience[] = [
     ),
     category: "ESPORTS",
     highlights: [
+      bi("Coached teams claim 3× first place and 1× runner-up in 2026 — including two national titles (Liga Nasional STAN, National Esports Championship NEXUS)", "Tim binaan meraih 3× Juara 1 dan 1× Juara 2 pada 2026 — termasuk dua gelar nasional (Liga Nasional STAN, National Esports Championship NEXUS)"),
       bi("Oversees 3 divisions: Research & Development, Management, and Event", "Mengawasi 3 divisi: Riset & Pengembangan, Manajemen, dan Event"),
       bi("Coordinates athlete coaching and development across all rosters", "Mengoordinasikan pembinaan dan pengembangan atlet di semua roster"),
       bi("Sets department-wide strategy for competitive performance", "Menetapkan strategi departemen untuk performa kompetitif"),
@@ -392,6 +393,57 @@ export const skills: Skill[] = [
   { name: "Leadership", level: 5, category: "ESPORTS", group: "Leadership" },
   { name: "Coordination", level: 4, category: "ESPORTS", group: "Leadership" },
   { name: "Public Speaking", level: 3, category: "ESPORTS", group: "Leadership" },
+]
+
+export interface EsportsAchievement {
+  id: string
+  date: Bi
+  game: string
+  tournament: Bi
+  /** 1 = champion, 2 = runner-up (drives the badge styling). */
+  rank: 1 | 2
+  mode: "Online"
+  placement: Bi
+}
+
+// Team results while Farid was Head of Department & Manager (2026 season).
+export const esportsAchievements: EsportsAchievement[] = [
+  {
+    id: "ea1",
+    date: bi("Sep 24, 2026", "24 September 2026"),
+    game: "MLBB",
+    tournament: bi("National Esports Championship NEXUS", "National Esports Championship NEXUS"),
+    rank: 1,
+    mode: "Online",
+    placement: bi("Champion", "Juara 1"),
+  },
+  {
+    id: "ea2",
+    date: bi("Sep 5, 2026", "5 September 2026"),
+    game: "MLBB",
+    tournament: bi("Liga Nasional STAN 2026", "Liga Nasional STAN 2026"),
+    rank: 1,
+    mode: "Online",
+    placement: bi("Champion", "Juara 1"),
+  },
+  {
+    id: "ea3",
+    date: bi("Jul 20, 2026", "20 Juli 2026"),
+    game: "MLBB",
+    tournament: bi("Vindicta Cup Nasional Mahasiswa", "Vindicta Cup Nasional Mahasiswa"),
+    rank: 2,
+    mode: "Online",
+    placement: bi("Runner-up", "Juara 2"),
+  },
+  {
+    id: "ea4",
+    date: bi("May 22, 2026", "22 Mei 2026"),
+    game: "MLBB",
+    tournament: bi("Big Bang Lampung Timur", "Big Bang Lampung Timur"),
+    rank: 1,
+    mode: "Online",
+    placement: bi("Champion", "Juara 1"),
+  },
 ]
 
 // Certificate images live in `/public/certificates/`. Copy the JPGs you have
