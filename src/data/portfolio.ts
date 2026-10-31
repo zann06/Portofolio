@@ -255,11 +255,12 @@ export const experiences: Experience[] = [
     organization: "Freelance — Tangerang",
     period: "2026",
     description: bi(
-      "Building meeting and work automation systems with n8n, connecting apps and services to automate scheduling, follow-ups, and other repetitive business workflows for clients in Tangerang.",
-      "Membangun sistem otomasi rapat dan pekerjaan dengan n8n, menghubungkan aplikasi dan layanan untuk mengotomatiskan penjadwalan, tindak lanjut, dan alur kerja bisnis repetitif lain bagi klien di Tangerang."
+      "Part of a new learning stage: exploring workflow automation with n8n — building meeting and work automation systems that connect apps and services to automate scheduling, follow-ups, and other repetitive business workflows for clients in Tangerang.",
+      "Bagian dari tahap belajar baru: mengeksplorasi otomasi workflow dengan n8n — membangun sistem otomasi rapat dan pekerjaan yang menghubungkan aplikasi dan layanan untuk mengotomatiskan penjadwalan, tindak lanjut, dan alur kerja bisnis repetitif lain bagi klien di Tangerang."
     ),
     category: "IT",
     highlights: [
+      bi("Learning workflow automation end-to-end — from visual flow design to real client implementations", "Mempelajari otomasi workflow secara menyeluruh — dari desain flow visual hingga implementasi nyata untuk klien"),
       bi("Designed n8n workflows to automate meeting scheduling and follow-ups", "Merancang workflow n8n untuk mengotomatiskan penjadwalan rapat dan tindak lanjut"),
       bi("Integrated multiple apps and services into end-to-end automated pipelines", "Mengintegrasikan banyak aplikasi dan layanan ke pipeline otomatis end-to-end"),
       bi("Reduced manual effort on repetitive business processes for clients", "Mengurangi kerja manual pada proses bisnis repetitif untuk klien"),
