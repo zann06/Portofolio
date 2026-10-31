@@ -1,9 +1,9 @@
-import { lazy, Suspense, useRef } from "react"
+import { lazy, Suspense, useRef, useState } from "react"
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion"
-import { ArrowDown, ArrowUpRight, Download } from "lucide-react"
+import { ArrowDown, ArrowUpRight } from "lucide-react"
 import { useLang, bi } from "@/lib/i18n"
 import { scrollToSection } from "@/lib/smooth-scroll"
-import { asset } from "@/lib/utils"
+import { CvDialog } from "@/components/portfolio/CvDialog"
 
 // three.js (+R3F) is ~600KB, so the island loads as its own chunk after the
 // page is interactive — the hero renders instantly with a quiet placeholder.
@@ -36,6 +36,7 @@ const itemVariants = {
 
 export function Hero({ activeIdentity }: HeroProps) {
   const { t } = useLang()
+  const [cvOpen, setCvOpen] = useState(false)
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -182,15 +183,14 @@ export function Hero({ activeIdentity }: HeroProps) {
             >
               {t(bi("Get in Touch", "Hubungi Saya"))}
             </motion.button>
-            <motion.a
-              href={asset("/cv/farid-rizky-fauzan-cv.pdf")}
-              download="Farid-Rizky-Fauzan-CV.pdf"
+            <motion.button
+              onClick={() => setCvOpen(true)}
               className="inline-flex items-center gap-2 border border-border text-foreground px-6 py-3 rounded-full text-sm font-medium hover:bg-muted transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              {t(bi("Download CV", "Unduh CV"))} <Download className="size-4" />
-            </motion.a>
+              {t(bi("Download CV", "Unduh CV"))}
+            </motion.button>
           </motion.div>
 
           {/* Stats */}
@@ -255,6 +255,10 @@ export function Hero({ activeIdentity }: HeroProps) {
             </div>
           </motion.div>
         </div>
+
+        {/* Download-CV picker dialog lives at section level — it must NOT sit
+           inside the parallax wrapper, whose transform would break the
+           fixed-position overlay. */}
       </motion.div>
 
       {/* Scroll Indicator */}
@@ -273,6 +277,8 @@ export function Hero({ activeIdentity }: HeroProps) {
           <ArrowDown className="size-4" />
         </motion.div>
       </motion.button>
+
+      <CvDialog open={cvOpen} onClose={() => setCvOpen(false)} identity={activeIdentity} />
     </section>
   )
 }
