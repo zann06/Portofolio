@@ -130,8 +130,9 @@ export function Experience() {
         </motion.div>
 
         {/* Coaching & management achievements — the esports side's hard
-           results: what the teams Farid develops actually won. */}
-        {activeFilter !== "IT" && (
+           results: what the teams Farid develops actually won. Only shown
+           when the ESPORTS filter is active, so the ALL view stays neutral. */}
+        {activeFilter === "ESPORTS" && (
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
