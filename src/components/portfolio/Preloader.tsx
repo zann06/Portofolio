@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useLang, bi } from "@/lib/i18n"
 
 interface PreloaderProps {
   onComplete: () => void
 }
 
 export function Preloader({ onComplete }: PreloaderProps) {
+  const { t } = useLang()
   const [progress, setProgress] = useState(0)
   const [phase, setPhase] = useState<"loading" | "reveal">("loading")
 
@@ -59,7 +61,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
             <div className="flex justify-between items-center mt-3">
               <span className="text-muted-foreground text-xs tracking-widest">
-                Loading
+                {t(bi("Loading", "Memuat"))}
               </span>
               <span className="text-foreground text-xs font-mono">
                 {displayProgress}%

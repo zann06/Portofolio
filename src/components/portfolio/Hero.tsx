@@ -1,6 +1,7 @@
 import { lazy, Suspense, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowDown, ArrowUpRight, Download } from "lucide-react"
+import { useLang, bi } from "@/lib/i18n"
 import { asset } from "@/lib/utils"
 
 // three.js (+R3F) is ~600KB, so the island loads as its own chunk after the
@@ -33,6 +34,7 @@ const itemVariants = {
 }
 
 export function Hero({ activeIdentity }: HeroProps) {
+  const { t } = useLang()
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -79,7 +81,11 @@ export function Hero({ activeIdentity }: HeroProps) {
           >
             <div className="h-px w-12 bg-foreground/30" />
             <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">
-              {activeIdentity === "IT" ? "Technology & Development" : "Esports & Organization"}
+              {t(
+                activeIdentity === "IT"
+                  ? bi("Technology & Development", "Teknologi & Pengembangan")
+                  : bi("Esports & Organization", "Esports & Organisasi")
+              )}
             </span>
           </motion.div>
 
@@ -108,7 +114,7 @@ export function Hero({ activeIdentity }: HeroProps) {
               layout
             >
               <span className="size-1.5 rounded-full bg-current" />
-              IT & Technology
+              {t(bi("IT & Technology", "IT & Teknologi"))}
             </motion.span>
             <motion.span
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all duration-500 ${
@@ -119,7 +125,7 @@ export function Hero({ activeIdentity }: HeroProps) {
               layout
             >
               <span className="size-1.5 rounded-full bg-current" />
-              Esports & Organization
+              {t(bi("Esports & Organization", "Esports & Organisasi"))}
             </motion.span>
           </motion.div>
 
@@ -128,9 +134,11 @@ export function Hero({ activeIdentity }: HeroProps) {
             variants={itemVariants}
             className="max-w-xl text-lg text-muted-foreground leading-relaxed"
           >
-            {activeIdentity === "IT"
-              ? "Full-stack developer and UX researcher building thoughtful digital products — from web applications to data-driven platforms."
-              : "Esports manager and strategist leading competitive teams, managing organizations, and developing athletes at the national level."}
+            {t(
+              activeIdentity === "IT"
+                ? bi("Full-stack developer and UX researcher building thoughtful digital products — from web applications to data-driven platforms.", "Full-stack developer dan UX researcher yang membangun produk digital yang thoughtful — dari aplikasi web hingga platform berbasis data.")
+                : bi("Esports manager and strategist leading competitive teams, managing organizations, and developing athletes at the national level.", "Manajer dan strategis esports yang memimpin tim kompetitif, mengelola organisasi, dan membina atlet hingga level nasional.")
+            )}
           </motion.p>
 
           {/* CTA */}
@@ -145,7 +153,7 @@ export function Hero({ activeIdentity }: HeroProps) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              View My Work
+              {t(bi("View My Work", "Lihat Karya Saya"))}
             </motion.button>
             <motion.button
               onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
@@ -153,7 +161,7 @@ export function Hero({ activeIdentity }: HeroProps) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Get in Touch
+              {t(bi("Get in Touch", "Hubungi Saya"))}
             </motion.button>
             <motion.a
               href={asset("/cv/farid-rizky-fauzan-cv.pdf")}
@@ -162,7 +170,7 @@ export function Hero({ activeIdentity }: HeroProps) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Download CV <Download className="size-4" />
+              {t(bi("Download CV", "Unduh CV"))} <Download className="size-4" />
             </motion.a>
           </motion.div>
 
@@ -172,13 +180,13 @@ export function Hero({ activeIdentity }: HeroProps) {
             className="grid grid-cols-3 gap-6 mt-16 pt-10 border-t border-border max-w-lg"
           >
             {[
-              { value: "3+", label: "Years Experience" },
-              { value: "15+", label: "Projects Shipped" },
-              { value: "9+", label: "Teams Managed" },
+              { value: "3+", label: bi("Years Experience", "Tahun Pengalaman") },
+              { value: "15+", label: bi("Projects Shipped", "Proyek Selesai") },
+              { value: "9+", label: bi("Teams Managed", "Tim Dikelola") },
             ].map((stat) => (
-              <div key={stat.label}>
+              <div key={t(stat.label)}>
                 <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+                <div className="text-xs text-muted-foreground mt-1">{t(stat.label)}</div>
               </div>
             ))}
           </motion.div>
@@ -197,12 +205,12 @@ export function Hero({ activeIdentity }: HeroProps) {
               <span
                 className={`size-1.5 rounded-full ${activeIdentity === "IT" ? "bg-it" : "bg-esports"}`}
               />
-              Available for selected work
+              {t(bi("Available for selected work", "Terbuka untuk kerja terpilih"))}
             </div>
             <div className="absolute -bottom-5 -left-5">
               <div className="rounded-xl border border-border bg-card/90 px-4 py-3 shadow-xl backdrop-blur-md">
                 <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                  Drag to orbit
+                  {t(bi("Drag to orbit", "Geser untuk memutar"))}
                 </div>
                 <a
                   href="https://zann06.github.io/TinyWorld/"
@@ -210,7 +218,7 @@ export function Hero({ activeIdentity }: HeroProps) {
                   rel="noopener noreferrer"
                   className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-muted-foreground transition-colors"
                 >
-                  From TinyWorld — open demo <ArrowUpRight className="size-3.5" />
+                  {t(bi("From TinyWorld — open demo", "Dari TinyWorld — buka demo"))} <ArrowUpRight className="size-3.5" />
                 </a>
               </div>
             </div>
@@ -226,7 +234,7 @@ export function Hero({ activeIdentity }: HeroProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.6 }}
       >
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
+        <span className="text-xs tracking-widest uppercase">{t(bi("Scroll", "Gulir"))}</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}

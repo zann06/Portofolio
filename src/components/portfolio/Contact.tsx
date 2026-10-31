@@ -3,6 +3,7 @@ import type { FormEvent } from "react"
 import { motion } from "framer-motion"
 import { Mail, MapPin, Send } from "lucide-react"
 import { toast } from "sonner"
+import { useLang, bi } from "@/lib/i18n"
 import { GithubIcon, LinkedinIcon } from "@/components/portfolio/SocialIcons"
 
 // lucide-react dropped brand/logo icons (Instagram included), so this one is
@@ -28,6 +29,7 @@ function InstagramIcon({ className }: { className?: string }) {
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export function Contact() {
+  const { t } = useLang()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,7 +45,12 @@ export function Contact() {
       `${formData.message}\n\n— ${formData.name} (${formData.email})`
     )
     window.location.href = `mailto:fauzan.faridrizky@gmail.com?subject=${subject}&body=${body}`
-    toast.success("Opening your email app with the message pre-filled.")
+    toast.success(
+      t(bi(
+        "Opening your email app with the message pre-filled.",
+        "Membuka aplikasi email Anda dengan pesan yang sudah terisi."
+      ))
+    )
   }
 
   return (
@@ -58,7 +65,7 @@ export function Contact() {
           <div className="flex items-center gap-3 mb-8">
             <div className="h-px w-12 bg-foreground/30" />
             <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">
-              Contact
+              {t(bi("Contact", "Kontak"))}
             </span>
           </div>
 
@@ -66,12 +73,13 @@ export function Contact() {
             {/* Left */}
             <div>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
-                Let's build something together.
+                {t(bi("Let's build something together.", "Mari membangun sesuatu bersama."))}
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-md">
-                Whether you're looking for a developer, an esports manager, or
-                someone who lives at the intersection of both — I'd love to hear
-                from you.
+                {t(bi(
+                  "Whether you're looking for a developer, an esports manager, or someone who lives at the intersection of both — I'd love to hear from you.",
+                  "Baik Anda mencari developer, manajer esports, atau seseorang yang berada di persimpangan keduanya — saya senang mendengar dari Anda."
+                ))}
               </p>
 
               <div className="space-y-4">
@@ -126,7 +134,7 @@ export function Contact() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
-                  Name
+                  {t(bi("Name", "Nama"))}
                 </label>
                 <input
                   type="text"
@@ -134,7 +142,7 @@ export function Contact() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full h-10 px-3 rounded-md border border-input bg-transparent text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 transition-all"
-                  placeholder="Your name"
+                  placeholder={t(bi("Your name", "Nama Anda"))}
                 />
               </div>
               <div>
@@ -152,7 +160,7 @@ export function Contact() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
-                  Message
+                  {t(bi("Message", "Pesan"))}
                 </label>
                 <textarea
                   required
@@ -160,7 +168,7 @@ export function Contact() {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={5}
                   className="w-full px-3 py-2 rounded-md border border-input bg-transparent text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 transition-all resize-none"
-                  placeholder="Tell me about your project or opportunity..."
+                  placeholder={t(bi("Tell me about your project or opportunity...", "Ceritakan proyek atau peluang Anda..."))}
                 />
               </div>
               <motion.button
@@ -169,11 +177,13 @@ export function Contact() {
                 whileTap={{ scale: 0.99 }}
                 className="inline-flex items-center gap-2 bg-foreground text-primary-foreground px-6 py-3 rounded-full text-sm font-medium hover:bg-foreground/80 transition-colors"
               >
-                Send Message <Send className="size-4" />
+                {t(bi("Send Message", "Kirim Pesan"))} <Send className="size-4" />
               </motion.button>
               <p className="text-xs text-muted-foreground">
-                Submitting opens your email app with everything pre-filled to
-                fauzan.faridrizky@gmail.com.
+                {t(bi(
+                  "Submitting opens your email app with everything pre-filled to fauzan.faridrizky@gmail.com.",
+                  "Saat dikirim, aplikasi email Anda terbuka dengan pesan yang sudah terisi ke fauzan.faridrizky@gmail.com."
+                ))}
               </p>
             </form>
           </div>

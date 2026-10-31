@@ -128,3 +128,7 @@
     transition-duration: 0.01ms !important;
   }
 }
+/* Anchored sections clear the fixed navbar when scrolled to */
+section[id] {
+  scroll-margin-top: 5rem;
+}

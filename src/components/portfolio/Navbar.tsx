@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import { useLang, bi, type Lang } from "@/lib/i18n"
 
 interface NavbarProps {
   activeIdentity: "IT" | "ESPORTS"
@@ -8,23 +9,73 @@ interface NavbarProps {
 }
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#works" },
-  { label: "Experience", href: "#experience" },
-  { label: "Skills", href: "#skills" },
-  { label: "Certificates", href: "#certificates" },
-  { label: "Contact", href: "#contact" },
+  { label: bi("About", "Tentang"), href: "#about" },
+  { label: bi("Work", "Karya"), href: "#works" },
+  { label: bi("Experience", "Pengalaman"), href: "#experience" },
+  { label: bi("Skills", "Keahlian"), href: "#skills" },
+  { label: bi("Certificates", "Sertifikat"), href: "#certificates" },
+  { label: bi("Contact", "Kontak"), href: "#contact" },
 ]
 
+function LanguageToggle() {
+  const { lang, setLang } = useLang()
+  return (
+    <div className="flex items-center gap-1 bg-muted rounded-full p-1">
+      {(["en", "id"] as const).map((code) => (
+        <button
+          key={code}
+          onClick={() => setLang(code as Lang)}
+          aria-label={`Switch to ${code === "en" ? "English" : "Indonesia"}`}
+          className={`relative px-3 py-1.5 text-xs font-semibold uppercase rounded-full transition-colors duration-200 ${
+            lang === code ? "text-white" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          {lang === code && (
+            <motion.span
+              className="absolute inset-0 rounded-full bg-foreground"
+              layoutId="lang-pill"
+              transition={{ type: "spring", stiffness: 400, damping: 35 }}
+            />
+          )}
+          <span className="relative z-10">{code}</span>
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
+  const { t } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  // Scroll-spy: highlight the nav link of the section currently in view.
+  const [activeSection, setActiveSection] = useState<string>("")
+
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 25 })
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
     handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Track which section the viewport is currently in (fixed navbar offset).
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.slice(1))
+    const onScroll = () => {
+      const pos = window.scrollY + 160
+      let current = ""
+      for (const id of ids) {
+        const el = document.getElementById(id)
+        if (el && el.offsetTop <= pos) current = id
+      }
+      setActiveSection(current)
+    }
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   // Lock body scroll while the mobile drawer is open
@@ -56,6 +107,10 @@ export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
             {/* Logo */}
             <motion.a
               href="#"
+              onClick={(e) => {
+                e.preventDefault()
+                window.scrollTo({ top: 0, behavior: "smooth" })
+              }}
               className="font-semibold text-sm tracking-tight text-foreground"
               whileHover={{ opacity: 0.7 }}
               transition={{ duration: 0.2 }}
@@ -63,21 +118,34 @@ export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
               FRF
             </motion.a>
 
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => handleLink(link.href)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  {link.label}
-                </button>
-              ))}
+            {/* Desktop Nav — scroll-spy highlights the section in view */}
+            <nav className="hidden md:flex items-center gap-5">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.slice(1)
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => handleLink(link.href)}
+                    className={`relative text-sm transition-colors duration-200 ${
+                      isActive ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {t(link.label)}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active-dot"
+                        className="absolute -bottom-2 left-1/2 -translate-x-1/2 size-1 rounded-full bg-foreground"
+                        transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                      />
+                    )}
+                  </button>
+                )
+              })}
             </nav>
 
-            {/* Identity Switcher */}
+            {/* Identity + language switchers */}
             <div className="hidden md:flex items-center gap-3">
+              <LanguageToggle />
               <div className="flex items-center gap-1 bg-muted rounded-full p-1">
                 {(["IT", "ESPORTS"] as const).map((id) => (
                   <button
@@ -116,6 +184,12 @@ export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
             </div>
           </div>
         </div>
+
+        {/* Scroll progress — hairline gradient under the header */}
+        <motion.div
+          style={{ scaleX: progress }}
+          className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-it via-foreground to-esports"
+        />
       </motion.header>
 
       {/* Mobile Menu Drawer */}
@@ -129,7 +203,7 @@ export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
             transition={{ duration: 0.3 }}
           >
             <div className="flex flex-col p-6 gap-2">
-              {/* Identity Switcher Mobile */}
+              {/* Switchers Mobile */}
               <div className="flex gap-2 mb-4">
                 {(["IT", "ESPORTS"] as const).map((id) => (
                   <button
@@ -146,17 +220,22 @@ export function Navbar({ activeIdentity, onIdentityChange }: NavbarProps) {
                     {id}
                   </button>
                 ))}
+                <LanguageToggle />
               </div>
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.href}
                   onClick={() => handleLink(link.href)}
-                  className="text-left py-3 text-xl font-medium text-foreground border-b border-border/50 hover:text-muted-foreground transition-colors"
+                  className={`text-left py-3 text-xl font-medium border-b border-border/50 transition-colors ${
+                    activeSection === link.href.slice(1)
+                      ? "text-foreground"
+                      : "text-foreground/70 hover:text-muted-foreground"
+                  }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
                 >
-                  {link.label}
+                  {t(link.label)}
                 </motion.button>
               ))}
             </div>

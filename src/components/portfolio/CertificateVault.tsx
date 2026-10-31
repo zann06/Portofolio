@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence, useMotionValue, animate, type PanInfo } from "framer-motion"
 import { Award, ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react"
 import { certificates, type Certificate } from "@/data/portfolio"
+import { useLang, bi } from "@/lib/i18n"
 import { asset } from "@/lib/utils"
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -55,6 +56,7 @@ function CertificateVisual({
   cert: CertificateWithImage
   size?: "card" | "detail"
 }) {
+  const { t } = useLang()
   const iconSize = size === "card" ? "size-8" : "size-16"
   const gridSize = size === "card" ? "18px 18px" : "24px 24px"
 
@@ -62,7 +64,7 @@ function CertificateVisual({
     return (
       <img
         src={asset(cert.image)}
-        alt={cert.title}
+        alt={t(cert.title)}
         loading="lazy"
         className="absolute inset-0 size-full object-cover"
       />
@@ -92,6 +94,7 @@ function CertificateVisual({
 }
 
 export function CertificateVault() {
+  const { t } = useLang()
   const [activeFilter, setActiveFilter] = useState<Filter>("ALL")
   const [active, setActive] = useState(0)
   const [selected, setSelected] = useState<CertificateWithImage | null>(null)
@@ -141,11 +144,11 @@ export function CertificateVault() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-12 bg-foreground/30" />
               <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">
-                Certificate Vault
+                {t(bi("Certificate Vault", "Vault Sertifikat"))}
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-xl">
-              Verified credentials and achievements.
+              {t(bi("Verified credentials and achievements.", "Kredensial dan pencapaian terverifikasi."))}
             </h2>
           </div>
 
@@ -252,10 +255,10 @@ export function CertificateVault() {
                     {/* Content */}
                     <div className="p-4">
                       <h3 className="text-sm font-semibold text-foreground mb-1 line-clamp-1 group-hover:text-muted-foreground transition-colors">
-                        {cert.title}
+                        {t(cert.title)}
                       </h3>
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span className="truncate">{cert.issuer}</span>
+                        <span className="truncate">{t(cert.issuer)}</span>
                         <span className="shrink-0 ml-2">{cert.year}</span>
                       </div>
                     </div>
@@ -284,7 +287,7 @@ export function CertificateVault() {
 
         {filtered.length === 0 && (
           <div className="py-16 text-center text-sm text-muted-foreground">
-            No certificates in this category yet.
+            {t(bi("No certificates in this category yet.", "Belum ada sertifikat di kategori ini."))}
           </div>
         )}
       </div>
@@ -299,7 +302,7 @@ export function CertificateVault() {
             exit={{ opacity: 0 }}
             role="dialog"
             aria-modal="true"
-            aria-label={selected.title}
+            aria-label={t(selected.title)}
           >
             <div
               className="absolute inset-0 bg-foreground/30 backdrop-blur-sm"
@@ -332,10 +335,10 @@ export function CertificateVault() {
                   </span>
                   <span className="text-xs text-muted-foreground">{selected.year}</span>
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{selected.title}</h3>
-                <div className="text-sm text-muted-foreground mb-4">{selected.issuer}</div>
+                <h3 className="text-xl font-bold text-foreground mb-2">{t(selected.title)}</h3>
+                <div className="text-sm text-muted-foreground mb-4">{t(selected.issuer)}</div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  {selected.description}
+                  {t(selected.description)}
                 </p>
                 {selected.verificationUrl && (
                   <a
@@ -344,7 +347,7 @@ export function CertificateVault() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
                   >
-                    Verify Certificate
+                    {t(bi("Verify Certificate", "Verifikasi Sertifikat"))}
                     <ExternalLink className="size-4" />
                   </a>
                 )}

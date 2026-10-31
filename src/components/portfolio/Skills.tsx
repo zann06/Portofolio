@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { skills, type Skill } from "@/data/portfolio"
+import { useLang, bi } from "@/lib/i18n"
 import { GithubActivity } from "@/components/portfolio/GithubActivity"
 
 const GITHUB_USERNAME = "zann06"
@@ -9,16 +10,21 @@ type Filter = "IT" | "ESPORTS"
 
 const filters: Filter[] = ["IT", "ESPORTS"]
 
-function levelLabel(level: number): string {
-  const labels = ["", "Beginner", "Familiar", "Intermediate", "Advanced", "Expert"]
-  return labels[level] ?? ""
-}
+const LEVEL_LABELS = [
+  bi("", ""),
+  bi("Beginner", "Pemula"),
+  bi("Familiar", "Familiar"),
+  bi("Intermediate", "Menengah"),
+  bi("Advanced", "Lanjutan"),
+  bi("Expert", "Ahli"),
+]
 
 function levelPercent(level: number): number {
   return Math.round((level / 5) * 100)
 }
 
 function SkillRow({ skill, index }: { skill: Skill; index: number }) {
+  const { t } = useLang()
   const accent = skill.category === "IT" ? "var(--it)" : "var(--esports)"
   const percent = levelPercent(skill.level)
 
@@ -34,17 +40,21 @@ function SkillRow({ skill, index }: { skill: Skill; index: number }) {
         <span className="text-sm font-medium text-foreground">{skill.name}</span>
         <span className="font-mono text-xs text-muted-foreground">{percent}%</span>
       </div>
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted">
-        <motion.div
-          className="absolute inset-y-0 left-0 rounded-full"
-          style={{ backgroundColor: accent }}
-          initial={{ width: 0 }}
-          animate={{ width: `${percent}%` }}
-          transition={{ duration: 0.7, delay: index * 0.04 + 0.1, ease: [0.22, 1, 0.36, 1] }}
-        />
+      {/* 5-segment meter — reads as a level scale rather than a raw progress bar */}
+      <div className="flex gap-1">
+        {[1, 2, 3, 4, 5].map((seg) => (
+          <motion.span
+            key={seg}
+            className={`h-1.5 flex-1 rounded-full ${seg <= skill.level ? "" : "bg-muted"}`}
+            style={seg <= skill.level ? { backgroundColor: accent } : undefined}
+            initial={{ opacity: 0, scaleY: 0.3 }}
+            animate={{ opacity: 1, scaleY: 1 }}
+            transition={{ duration: 0.3, delay: index * 0.04 + seg * 0.05 }}
+          />
+        ))}
       </div>
       <div className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground/60">
-        {levelLabel(skill.level)}
+        {t(LEVEL_LABELS[skill.level])}
       </div>
     </motion.div>
   )
@@ -60,6 +70,7 @@ function StatCard({ value, label }: { value: string; label: string }) {
 }
 
 export function Skills() {
+  const { t } = useLang()
   const [activeFilter, setActiveFilter] = useState<Filter>("IT")
   const filtered = skills.filter((s) => s.category === activeFilter)
   const groups = [...new Set(filtered.map((s) => s.group))]
@@ -78,11 +89,11 @@ export function Skills() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-12 bg-foreground/30" />
               <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">
-                Skills
+                {t(bi("Skills", "Keahlian"))}
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-xl">
-              Tools and capabilities across both disciplines.
+              {t(bi("Tools and capabilities across both disciplines.", "Tools dan kemampuan di kedua disiplin."))}
             </h2>
           </div>
 
@@ -115,10 +126,10 @@ export function Skills() {
 
         {/* Stats Summary */}
         <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <StatCard value={String(filtered.length)} label="Total Skills" />
-          <StatCard value={String(expertCount)} label="Expert Level" />
-          <StatCard value={avgLevel} label="Avg. Level" />
-          <StatCard value={String(groups.length)} label="Skill Groups" />
+          <StatCard value={String(filtered.length)} label={t(bi("Total Skills", "Total Skill"))} />
+          <StatCard value={String(expertCount)} label={t(bi("Expert Level", "Level Ahli"))} />
+          <StatCard value={avgLevel} label={t(bi("Avg. Level", "Rata-rata Level"))} />
+          <StatCard value={String(groups.length)} label={t(bi("Skill Groups", "Grup Skill"))} />
         </div>
 
         {/* Live GitHub snapshot — only makes sense for the IT side */}

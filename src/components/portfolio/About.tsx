@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import type { Variants } from "framer-motion"
 import { Laptop3D } from "@/components/portfolio/Laptop3D"
+import { useLang, bi } from "@/lib/i18n"
 import { asset } from "@/lib/utils"
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -16,6 +17,7 @@ const itemVariants: Variants = {
 }
 
 export function About() {
+  const { t } = useLang()
   return (
     <section id="about" className="py-24 md:py-32 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -38,26 +40,29 @@ export function About() {
                 variants={itemVariants}
                 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-8"
               >
-                Two sides.
+                {t(bi("Two sides.", "Dua sisi."))}
                 <br />
-                <span className="text-muted-foreground/40">One identity.</span>
+                <span className="text-muted-foreground/40">{t(bi("One identity.", "Satu identitas."))}</span>
               </motion.h2>
 
               <motion.div variants={itemVariants} className="space-y-6 text-lg text-muted-foreground leading-relaxed max-w-2xl">
                 <p>
-                  I'm <span className="text-foreground font-medium">Farid Rizky Fauzan</span> —
-                  a developer, researcher, and esports manager who believes technology and
-                  competitive gaming aren't separate worlds, but complementary disciplines.
+                  {t(bi(
+                    "I'm Farid Rizky Fauzan — a developer, researcher, and esports manager who believes technology and competitive gaming aren't separate worlds, but complementary disciplines.",
+                    "Saya Farid Rizky Fauzan — developer, peneliti, dan manajer esports yang percaya teknologi dan gaming kompetitif bukan dua dunia terpisah, melainkan disiplin yang saling melengkapi."
+                  ))}
                 </p>
                 <p>
-                  On the technology side, I build web applications, design user experiences,
-                  and conduct research that turns data into decisions. On the esports side,
-                  I manage teams, develop athletes, and craft strategies that win tournaments.
+                  {t(bi(
+                    "On the technology side, I build web applications, design user experiences, and conduct research that turns data into decisions. On the esports side, I manage teams, develop athletes, and craft strategies that win tournaments.",
+                    "Di sisi teknologi, saya membangun aplikasi web, merancang pengalaman pengguna, dan melakukan riset yang mengubah data menjadi keputusan. Di sisi esports, saya mengelola tim, membina atlet, dan merancang strategi yang memenangkan turnamen."
+                  ))}
                 </p>
                 <p>
-                  My work lives at the intersection of these two worlds — where software
-                  meets competition, where data meets strategy, and where leadership meets
-                  innovation.
+                  {t(bi(
+                    "My work lives at the intersection of these two worlds — where software meets competition, where data meets strategy, and where leadership meets innovation.",
+                    "Karya saya berada di persimpangan dua dunia ini — tempat software bertemu kompetisi, data bertemu strategi, dan kepemimpinan bertemu inovasi."
+                  ))}
                 </p>
               </motion.div>
             </div>
@@ -81,22 +86,22 @@ export function About() {
                 <div className="border border-border rounded-2xl p-6 bg-card">
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between border-b border-border pb-3">
-                      <span className="text-muted-foreground">Location</span>
+                      <span className="text-muted-foreground">{t(bi("Location", "Lokasi"))}</span>
                       <span className="text-foreground font-medium">Indonesia</span>
                     </div>
                     <div className="flex justify-between border-b border-border pb-3">
-                      <span className="text-muted-foreground">Focus</span>
+                      <span className="text-muted-foreground">{t(bi("Focus", "Fokus"))}</span>
                       <span className="text-foreground font-medium">IT & Esports</span>
                     </div>
                     <div className="flex justify-between border-b border-border pb-3">
-                      <span className="text-muted-foreground">Status</span>
+                      <span className="text-muted-foreground">{t(bi("Status", "Status"))}</span>
                       <span className="text-foreground font-medium flex items-center gap-2">
                         <span className="size-2 rounded-full bg-emerald-500" />
-                        Available
+                        {t(bi("Available", "Tersedia"))}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Languages</span>
+                      <span className="text-muted-foreground">{t(bi("Languages", "Bahasa"))}</span>
                       <span className="text-foreground font-medium">EN, ID</span>
                     </div>
                   </div>
@@ -105,14 +110,14 @@ export function About() {
                 {/* Two Sides Card */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="border border-border rounded-xl p-5 bg-card">
-                    <div className="text-xs text-it mb-2 tracking-widest uppercase font-medium">Side A</div>
+                    <div className="text-xs text-it mb-2 tracking-widest uppercase font-medium">{t(bi("Side A", "Sisi A"))}</div>
                     <div className="font-semibold text-foreground">IT</div>
-                    <div className="text-xs text-muted-foreground mt-1">Development, UX, Research</div>
+                    <div className="text-xs text-muted-foreground mt-1">{t(bi("Development, UX, Research", "Pengembangan, UX, Riset"))}</div>
                   </div>
                   <div className="border border-border rounded-xl p-5 bg-card">
-                    <div className="text-xs text-esports mb-2 tracking-widest uppercase font-medium">Side B</div>
+                    <div className="text-xs text-esports mb-2 tracking-widest uppercase font-medium">{t(bi("Side B", "Sisi B"))}</div>
                     <div className="font-semibold text-foreground">Esports</div>
-                    <div className="text-xs text-muted-foreground mt-1">Management, Strategy, Leadership</div>
+                    <div className="text-xs text-muted-foreground mt-1">{t(bi("Management, Strategy, Leadership", "Manajemen, Strategi, Kepemimpinan"))}</div>
                   </div>
                 </div>
               </motion.div>

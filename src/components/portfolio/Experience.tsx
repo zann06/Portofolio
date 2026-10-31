@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { experiences, type Category } from "@/data/portfolio"
+import { useLang, bi } from "@/lib/i18n"
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -15,6 +16,7 @@ function matchesFilter(category: Category, filter: Filter): boolean {
 }
 
 export function Experience() {
+  const { t } = useLang()
   const [activeFilter, setActiveFilter] = useState<Filter>("ALL")
 
   const filtered = experiences.filter((e) => matchesFilter(e.category, activeFilter))
@@ -28,11 +30,11 @@ export function Experience() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-12 bg-foreground/30" />
               <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">
-                Experience
+                {t(bi("Experience", "Pengalaman"))}
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-xl">
-              A track record across both worlds.
+              {t(bi("A track record across both worlds.", "Rekam jejak di dua dunia."))}
             </h2>
           </div>
 
@@ -97,16 +99,16 @@ export function Experience() {
                       <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-muted text-muted-foreground">
                         {exp.category === "BOTH" ? "IT + ESPORTS" : exp.category}
                       </span>
-                      <span className="text-xs text-muted-foreground">{exp.period}</span>
+                      <span className="text-xs text-muted-foreground">{t(exp.period)}</span>
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-1">
-                      {exp.role}
+                      {t(exp.role)}
                     </h3>
                     <div className="text-sm text-muted-foreground mb-4">
-                      {exp.organization}
+                      {t(exp.organization)}
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                      {exp.description}
+                      {t(exp.description)}
                     </p>
                     <ul className="space-y-2">
                       {exp.highlights.map((highlight, i) => (
@@ -115,7 +117,7 @@ export function Experience() {
                           className="flex items-start gap-2 text-sm text-muted-foreground"
                         >
                           <span className="mt-1.5 size-1 rounded-full bg-foreground/40 shrink-0" />
-                          {highlight}
+                          {t(highlight)}
                         </li>
                       ))}
                     </ul>

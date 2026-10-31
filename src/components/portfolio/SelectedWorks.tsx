@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence, useMotionValue, animate, type PanInfo } from "framer-motion"
 import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react"
 import { projects, type Category } from "@/data/portfolio"
+import { useLang, bi } from "@/lib/i18n"
 import { asset } from "@/lib/utils"
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -59,6 +60,7 @@ function matchesFilter(category: Category, filter: Filter): boolean {
 }
 
 export function SelectedWorks() {
+  const { t } = useLang()
   const [activeFilter, setActiveFilter] = useState<Filter>("ALL")
   const [active, setActive] = useState(0)
   const [selected, setSelected] = useState<ProjectWithCover | null>(null)
@@ -108,11 +110,11 @@ export function SelectedWorks() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-12 bg-foreground/30" />
               <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">
-                Selected Works
+                {t(bi("Selected Works", "Karya Pilihan"))}
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-xl">
-              Projects that bridge technology and competition.
+              {t(bi("Projects that bridge technology and competition.", "Proyek yang menjembatani teknologi dan kompetisi."))}
             </h2>
           </div>
 
@@ -232,7 +234,7 @@ export function SelectedWorks() {
                         <>
                           <img
                             src={asset(project.coverImage)}
-                            alt={project.title}
+                            alt={t(project.title)}
                             loading="lazy"
                             className="absolute inset-0 size-full object-cover"
                           />
@@ -260,14 +262,14 @@ export function SelectedWorks() {
                                     : "text-foreground/10"
                               }`}
                             >
-                              {project.title.charAt(0)}
+                              {t(project.title).charAt(0)}
                             </span>
                           </div>
                         </>
                       )}
                       <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex items-end justify-between">
                         <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-foreground/50">
-                          Case study // {project.id.toUpperCase()}
+                          {t(bi("Case study", "Studi kasus"))} // {project.id.toUpperCase()}
                         </span>
                         {!project.coverImage && (
                           <div className="flex gap-1">
@@ -295,13 +297,13 @@ export function SelectedWorks() {
                     <div className="p-4 sm:p-5 lg:p-6">
                       <div className="flex items-start justify-between gap-3 mb-1.5">
                         <h3 className="text-base sm:text-lg font-semibold text-foreground line-clamp-1">
-                          {project.title}
+                          {t(project.title)}
                         </h3>
                         <ArrowUpRight className="size-4 text-muted-foreground shrink-0 mt-0.5" />
                       </div>
-                      <p className="text-xs text-muted-foreground mb-3">{project.subtitle}</p>
+                      <p className="text-xs text-muted-foreground mb-3">{t(project.subtitle)}</p>
                       <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
-                        {project.description}
+                        {t(project.description)}
                       </p>
                       <div className="flex flex-wrap gap-1.5">
                         {project.tags.slice(0, breakpoint === "mobile" ? 2 : 3).map((tag) => (
@@ -344,7 +346,7 @@ export function SelectedWorks() {
 
         {filtered.length === 0 && (
           <div className="py-16 text-center text-sm text-muted-foreground">
-            No projects in this category yet.
+            {t(bi("No projects in this category yet.", "Belum ada proyek di kategori ini."))}
           </div>
         )}
       </div>
@@ -359,7 +361,7 @@ export function SelectedWorks() {
             exit={{ opacity: 0 }}
             role="dialog"
             aria-modal="true"
-            aria-label={selected.title}
+            aria-label={t(selected.title)}
           >
             <div
               className="absolute inset-0 bg-foreground/30 backdrop-blur-sm"
@@ -385,13 +387,13 @@ export function SelectedWorks() {
                 {selected.coverImage ? (
                   <img
                     src={asset(selected.coverImage)}
-                    alt={selected.title}
+                    alt={t(selected.title)}
                     className="absolute inset-0 size-full object-cover"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="font-mono text-7xl font-bold tracking-tighter text-foreground/10">
-                      {selected.title.charAt(0)}
+                      {t(selected.title).charAt(0)}
                     </span>
                   </div>
                 )}
@@ -412,10 +414,10 @@ export function SelectedWorks() {
                   </span>
                   <span className="text-xs text-muted-foreground">{selected.year}</span>
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-1">{selected.title}</h3>
-                <div className="text-sm text-muted-foreground mb-4">{selected.subtitle}</div>
+                <h3 className="text-xl font-bold text-foreground mb-1">{t(selected.title)}</h3>
+                <div className="text-sm text-muted-foreground mb-4">{t(selected.subtitle)}</div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                  {selected.description}
+                  {t(selected.description)}
                 </p>
                 <div className="flex flex-wrap gap-1.5 mb-6">
                   {selected.tags.map((tag) => (
@@ -432,7 +434,9 @@ export function SelectedWorks() {
                     onClick={() => window.open(selected.link, "_blank", "noopener,noreferrer")}
                     className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
                   >
-                    {selected.link.includes("github.com") ? "View on GitHub" : "Visit live site"}
+                    {selected.link.includes("github.com")
+                      ? t(bi("View on GitHub", "Lihat di GitHub"))
+                      : t(bi("Visit live site", "Kunjungi situs live"))}
                     <ExternalLink className="size-4" />
                   </button>
                 )}
