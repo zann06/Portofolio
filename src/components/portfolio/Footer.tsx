@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { ArrowUp, Mail } from "lucide-react"
+import { ArrowUp, ExternalLink, Mail } from "lucide-react"
 import { useLang, bi } from "@/lib/i18n"
 import { scrollToTop } from "@/lib/smooth-scroll"
 import { GithubIcon, LinkedinIcon } from "@/components/portfolio/SocialIcons"
@@ -79,6 +79,28 @@ export function Footer() {
             {t(bi("Back to top", "Kembali ke atas"))}
             <ArrowUp className="size-4" />
           </motion.button>
+        </div>
+
+        {/* About this site — the portfolio itself is one of Farid's projects */}
+        <div className="mt-10 pt-8 border-t border-border max-w-3xl">
+          <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2.5">
+            {t(bi("About this site", "Tentang situs ini"))}
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {t(bi(
+              "This portfolio is a personal project — designed, written, and maintained entirely by me. It's a single-page React + TypeScript app styled with Tailwind CSS, animated with Framer Motion, smoothed by Lenis, and crowned by a Three.js island in the hero that doubles as a live demo of TinyWorld.",
+              "Portofolio ini adalah proyek pribadi — dirancang, ditulis, dan dirawat sepenuhnya oleh saya sendiri. Berupa aplikasi satu halaman React + TypeScript dengan gaya Tailwind CSS, animasi Framer Motion, gulir halus dari Lenis, dan pulau Three.js di hero yang sekaligus menjadi demo langsung dari TinyWorld."
+            ))}
+          </p>
+          <a
+            href="https://github.com/zann06/Portofolio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+          >
+            {t(bi("View source code on GitHub", "Lihat kode sumber di GitHub"))}
+            <ExternalLink className="size-3.5" />
+          </a>
         </div>
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-muted-foreground">
