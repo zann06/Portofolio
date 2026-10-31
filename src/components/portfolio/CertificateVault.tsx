@@ -232,7 +232,7 @@ export function CertificateVault({ identity }: { identity: "IT" | "ESPORTS" }) {
                       isActive ? "border-foreground/20 shadow-xl" : "border-border shadow-sm"
                     }`}
                     style={{ transformStyle: "preserve-3d", width: cardWidth }}
-                    initial={false}
+                    initial={{ opacity: 0, scale: 0.94 }}
                     animate={{
                       x: `calc(-50% + ${offset * stepX}px)`,
                       rotateY: Math.max(-stepRotate * visibleDepth, Math.min(stepRotate * visibleDepth, offset * -stepRotate)),
@@ -240,6 +240,7 @@ export function CertificateVault({ identity }: { identity: "IT" | "ESPORTS" }) {
                       opacity: 1 - depth * 0.32,
                       zIndex: 20 - depth,
                     }}
+                    exit={{ opacity: 0, scale: 0.94 }}
                     transition={{ type: "spring", stiffness: 220, damping: 28 }}
                     onClick={() => (isActive ? setSelected(cert) : setActive(index))}
                     whileHover={isActive ? { y: -4 } : undefined}

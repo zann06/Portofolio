@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import type { Variants } from "framer-motion"
 import { Code2, Layout, BarChart3, Trophy, Users, Target } from "lucide-react"
 import { useLang, bi } from "@/lib/i18n"
@@ -97,15 +97,34 @@ export function WhatIDo({ activeIdentity }: WhatIDoProps) {
             variants={itemVariants}
             className="text-3xl md:text-5xl font-bold tracking-tight mb-12 max-w-2xl"
           >
-            {t(
-              activeIdentity === "IT"
-                ? bi("Building digital products that solve real problems.", "Membangun produk digital yang memecahkan masalah nyata.")
-                : bi("Leading teams and strategies that win.", "Memimpin tim dan strategi yang menang.")
-            )}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={activeIdentity}
+                className="block"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22 }}
+              >
+                {t(
+                  activeIdentity === "IT"
+                    ? bi("Building digital products that solve real problems.", "Membangun produk digital yang memecahkan masalah nyata.")
+                    : bi("Leading teams and strategies that win.", "Memimpin tim dan strategi yang menang.")
+                )}
+              </motion.span>
+            </AnimatePresence>
           </motion.h2>
 
-          <motion.div variants={itemVariants} className="grid md:grid-cols-3 gap-6">
-            {services.map((service, i) => (
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={activeIdentity}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.32, ease: EASE }}
+              className="grid md:grid-cols-3 gap-6"
+            >
+              {services.map((service, i) => (
               <motion.div
                 key={i}
                 whileHover={{ y: -6 }}
@@ -123,7 +142,8 @@ export function WhatIDo({ activeIdentity }: WhatIDoProps) {
                 </p>
               </motion.div>
             ))}
-          </motion.div>
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

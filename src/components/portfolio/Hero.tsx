@@ -1,5 +1,5 @@
 import { lazy, Suspense, useRef } from "react"
-import { motion, useScroll, useSpring, useTransform } from "framer-motion"
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion"
 import { ArrowDown, ArrowUpRight, Download } from "lucide-react"
 import { useLang, bi } from "@/lib/i18n"
 import { scrollToSection } from "@/lib/smooth-scroll"
@@ -84,13 +84,22 @@ export function Hero({ activeIdentity }: HeroProps) {
             className="flex items-center gap-3 mb-8"
           >
             <div className="h-px w-12 bg-foreground/30" />
-            <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">
-              {t(
-                activeIdentity === "IT"
-                  ? bi("Technology & Development", "Teknologi & Pengembangan")
-                  : bi("Esports & Organization", "Esports & Organisasi")
-              )}
-            </span>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={activeIdentity}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22 }}
+                className="text-xs tracking-[0.3em] text-muted-foreground uppercase"
+              >
+                {t(
+                  activeIdentity === "IT"
+                    ? bi("Technology & Development", "Teknologi & Pengembangan")
+                    : bi("Esports & Organization", "Esports & Organisasi")
+                )}
+              </motion.span>
+            </AnimatePresence>
           </motion.div>
 
           {/* Name */}
@@ -133,17 +142,23 @@ export function Hero({ activeIdentity }: HeroProps) {
             </motion.span>
           </motion.div>
 
-          {/* Description */}
-          <motion.p
-            variants={itemVariants}
-            className="max-w-xl text-lg text-muted-foreground leading-relaxed"
-          >
-            {t(
-              activeIdentity === "IT"
-                ? bi("Full-stack developer and UX researcher building thoughtful digital products — from web applications to data-driven platforms.", "Full-stack developer dan UX researcher yang membangun produk digital yang thoughtful — dari aplikasi web hingga platform berbasis data.")
-                : bi("Esports manager and strategist leading competitive teams, managing organizations, and developing athletes at the national level.", "Manajer dan strategis esports yang memimpin tim kompetitif, mengelola organisasi, dan membina atlet hingga level nasional.")
-            )}
-          </motion.p>
+          {/* Description — crossfades when the identity toggle flips */}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.p
+              key={activeIdentity}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.28, ease: EASE }}
+              className="max-w-xl text-lg text-muted-foreground leading-relaxed"
+            >
+              {t(
+                activeIdentity === "IT"
+                  ? bi("Full-stack developer and UX researcher building thoughtful digital products — from web applications to data-driven platforms.", "Full-stack developer dan UX researcher yang membangun produk digital yang thoughtful — dari aplikasi web hingga platform berbasis data.")
+                  : bi("Esports manager and strategist leading competitive teams, managing organizations, and developing athletes at the national level.", "Manajer dan strategis esports yang memimpin tim kompetitif, mengelola organisasi, dan membina atlet hingga level nasional.")
+              )}
+            </motion.p>
+          </AnimatePresence>
 
           {/* CTA */}
           <motion.div variants={itemVariants} className="flex flex-wrap gap-4 mt-10">
