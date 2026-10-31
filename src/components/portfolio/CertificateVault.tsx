@@ -93,9 +93,14 @@ function CertificateVisual({
   )
 }
 
-export function CertificateVault() {
+export function CertificateVault({ identity }: { identity: "IT" | "ESPORTS" }) {
   const { t } = useLang()
-  const [activeFilter, setActiveFilter] = useState<Filter>("ALL")
+  // Follows the navbar identity switch. The vault has no ESPORTS category —
+  // the esports side maps to ORGANIZATION (org/esports certificates).
+  const [activeFilter, setActiveFilter] = useState<Filter>(identity === "ESPORTS" ? "ORGANIZATION" : "IT")
+  useEffect(() => {
+    setActiveFilter(identity === "ESPORTS" ? "ORGANIZATION" : "IT")
+  }, [identity])
   const [active, setActive] = useState(0)
   const [selected, setSelected] = useState<CertificateWithImage | null>(null)
   const dragX = useMotionValue(0)

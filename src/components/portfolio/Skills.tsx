@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { skills, type Skill } from "@/data/portfolio"
 import { useLang, bi } from "@/lib/i18n"
@@ -69,9 +69,13 @@ function StatCard({ value, label }: { value: string; label: string }) {
   )
 }
 
-export function Skills() {
+export function Skills({ identity }: { identity: "IT" | "ESPORTS" }) {
   const { t } = useLang()
-  const [activeFilter, setActiveFilter] = useState<Filter>("IT")
+  // Follows the navbar identity switch; manual filter clicks still work.
+  const [activeFilter, setActiveFilter] = useState<Filter>(identity)
+  useEffect(() => {
+    setActiveFilter(identity)
+  }, [identity])
   const filtered = skills.filter((s) => s.category === activeFilter)
   const groups = [...new Set(filtered.map((s) => s.group))]
 

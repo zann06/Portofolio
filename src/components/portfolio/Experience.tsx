@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Medal, Trophy } from "lucide-react"
 import { esportsAchievements, experiences, type Category } from "@/data/portfolio"
@@ -16,9 +16,13 @@ function matchesFilter(category: Category, filter: Filter): boolean {
   return category === filter
 }
 
-export function Experience() {
+export function Experience({ identity }: { identity: "IT" | "ESPORTS" }) {
   const { t } = useLang()
-  const [activeFilter, setActiveFilter] = useState<Filter>("ALL")
+  // Follows the navbar identity switch; manual filter clicks still work.
+  const [activeFilter, setActiveFilter] = useState<Filter>(identity)
+  useEffect(() => {
+    setActiveFilter(identity)
+  }, [identity])
 
   const filtered = experiences.filter((e) => matchesFilter(e.category, activeFilter))
 

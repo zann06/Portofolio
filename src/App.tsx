@@ -65,11 +65,11 @@ export function App() {
             <Hero activeIdentity={activeIdentity} />
             <About />
             <WhatIDo activeIdentity={activeIdentity} />
-            <SelectedWorks />
-            <Experience />
-            <Skills />
+            <SelectedWorks identity={activeIdentity} />
+            <Experience identity={activeIdentity} />
+            <Skills identity={activeIdentity} />
             <Approach />
-            <CertificateVault />
+            <CertificateVault identity={activeIdentity} />
             <Contact />
           </main>
           <Footer />

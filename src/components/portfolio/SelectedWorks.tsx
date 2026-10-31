@@ -59,9 +59,14 @@ function matchesFilter(category: Category, filter: Filter): boolean {
   return category === filter
 }
 
-export function SelectedWorks() {
+export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
   const { t } = useLang()
-  const [activeFilter, setActiveFilter] = useState<Filter>("ALL")
+  // The navbar identity switch drives this filter; manual clicks still work
+  // until the next navbar change re-syncs it.
+  const [activeFilter, setActiveFilter] = useState<Filter>(identity)
+  useEffect(() => {
+    setActiveFilter(identity)
+  }, [identity])
   const [active, setActive] = useState(0)
   const [selected, setSelected] = useState<ProjectWithCover | null>(null)
   const dragX = useMotionValue(0)
