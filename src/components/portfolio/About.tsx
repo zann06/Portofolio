@@ -77,7 +77,7 @@ export function About() {
                     the card below */}
                 <div className="pb-8">
                   <Laptop3D
-                    image={asset("/fauzan.jpg")}
+                    image={asset("/farid.jpg")}
                     alt="Farid Rizky Fauzan"
                   />
                 </div>
