@@ -128,13 +128,19 @@ export function Skills({ identity }: { identity: "IT" | "ESPORTS" }) {
           </div>
         </div>
 
-        {/* Stats Summary */}
-        <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {/* Stats Summary — crossfades with the filter so numbers don't hard-swap */}
+        <motion.div
+          key={activeFilter}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4"
+        >
           <StatCard value={String(filtered.length)} label={t(bi("Total Skills", "Total Skill"))} />
           <StatCard value={String(expertCount)} label={t(bi("Expert Level", "Level Ahli"))} />
           <StatCard value={avgLevel} label={t(bi("Avg. Level", "Rata-rata Level"))} />
           <StatCard value={String(groups.length)} label={t(bi("Skill Groups", "Grup Skill"))} />
-        </div>
+        </motion.div>
 
         {/* Live GitHub snapshot — only makes sense for the IT side */}
         <AnimatePresence>

@@ -221,10 +221,22 @@ export function Hero({ activeIdentity }: HeroProps) {
               <IslandScene identity={activeIdentity} />
             </Suspense>
             <div className="pointer-events-none absolute -top-4 -right-4 flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-lg backdrop-blur-md">
-              <span
+              <motion.span
                 className={`size-1.5 rounded-full ${activeIdentity === "IT" ? "bg-it" : "bg-esports"}`}
+                animate={{ backgroundColor: activeIdentity === "IT" ? "var(--it)" : "var(--esports)" }}
+                transition={{ duration: 0.4 }}
               />
-              {t(bi("Available for selected work", "Terbuka untuk kerja terpilih"))}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={activeIdentity}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {t(bi("Available for selected work", "Terbuka untuk kerja terpilih"))}
+                </motion.span>
+              </AnimatePresence>
             </div>
             <div className="absolute -bottom-5 -left-5">
               <div className="rounded-xl border border-border bg-card/90 px-4 py-3 shadow-xl backdrop-blur-md">
