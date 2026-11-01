@@ -202,11 +202,11 @@ export const projects: Project[] = [
   },
   {
     id: "mp5",
-    title: "Web Prodi Teknologi Industri Pangan",
+    title: "Web Prodi Teknologi Industri Pertanian",
     subtitle: bi("Collaborative website integration for the study program", "Integrasi website prodi secara kolaboratif"),
     description: bi(
-      "A collaborative engagement to help integrate the official website of the Teknologi Industri Pangan (Food Industry Technology) study program — hands-on web work done together with the program's team.",
-      "Kolaborasi membantu mengintegrasikan website resmi prodi Teknologi Industri Pangan — pekerjaan web hands-on bersama tim prodi."
+      "A collaborative engagement to help integrate the official website of the Teknologi Industri Pertanian (Agricultural Industry Technology) study program — hands-on web work done together with the program's team.",
+      "Kolaborasi membantu mengintegrasikan website resmi prodi Teknologi Industri Pertanian — pekerjaan web hands-on bersama tim prodi."
     ),
     category: "IT",
     tags: ["Web Integration", "Collaboration"],
