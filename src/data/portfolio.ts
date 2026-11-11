@@ -52,6 +52,21 @@ export const projects: Project[] = [
   // ── Proyek (flagship projects) ──────────────────────────────────────────
   {
     id: "p1",
+    title: "AksesAI",
+    subtitle: bi("Community directory of free & cheap AI resources", "Direktori AI gratis & murah buatan komunitas"),
+    description: bi(
+      "A community-contributed, manually verified directory of free and cheap AI resources — free API tokens, free tiers, per-token pricing, open-weight models, and free tools/hosting. Every entry carries an official source checked by human reviewers. Built with Next.js 16, Supabase (RLS on every table, GitHub OAuth), role-based workflows from contributors to admins, Upstash rate limiting, and full Vitest + Playwright + RLS test coverage in CI.",
+      "Direktori komunitas berisi info AI gratis & murah yang diverifikasi manusia — API/token gratis, free tier, harga per token, model open-weight, tool & hosting gratis. Setiap entri wajib menyertakan sumber resmi yang diperiksa reviewer. Dibangun dengan Next.js 16, Supabase (RLS di semua tabel, GitHub OAuth), alur peran dari kontributor hingga admin, rate limiting Upstash, serta pengujian Vitest + Playwright + RLS di CI."
+    ),
+    category: "IT",
+    tags: ["Next.js", "Supabase", "TypeScript"],
+    year: "2026",
+    coverImage: "/projects/p1-aksesai.jpg",
+    link: "https://aksesai-id.vercel.app",
+    featured: true,
+  },
+  {
+    id: "p2",
     title: "StudyHub",
     subtitle: bi("All-in-one academic productivity app for students", "Aplikasi produktivitas akademik all-in-one untuk mahasiswa"),
     description: bi(
@@ -66,7 +81,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "p2",
+    id: "p3",
     title: "TERA Esports — Digital Ecosystem",
     subtitle: bi("Official digital platform for a university esports organization", "Platform digital resmi untuk organisasi esports kampus"),
     description: bi(
@@ -81,7 +96,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "p3",
+    id: "p4",
     title: "DOAIBU — Robocode Tank Royale Bot",
     subtitle: bi("Greedy-algorithm bot for a tank battle simulator", "Bot algoritme greedy untuk simulator pertarungan tank"),
     description: bi(
@@ -95,7 +110,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "p4",
+    id: "p5",
     title: "MindMesh",
     subtitle: bi("Local-first knowledge universe & quiz app", "Aplikasi knowledge universe & kuis yang local-first"),
     description: bi(
@@ -110,7 +125,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "p5",
+    id: "p6",
     title: "TinyWorld",
     subtitle: bi("Browser-based 3D exploration game", "Game eksplorasi 3D berbasis browser"),
     description: bi(
@@ -125,7 +140,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "p6",
+    id: "p7",
     title: "CipherLab",
     subtitle: bi("Interactive block cipher cryptography lab", "Laboratorium kriptografi block cipher interaktif"),
     description: bi(
