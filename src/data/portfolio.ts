@@ -16,6 +16,9 @@ export interface Project {
   // Real screenshot/cover shown by SelectedWorks.tsx. Point it at a file in
   // `/public/projects/...`; omit it to keep the generated letter-mark cover.
   coverImage?: string
+  // How the cover fills its frame. "contain" keeps the whole diorama visible
+  // (used for square-ish artwork); defaults to "cover".
+  coverFit?: "cover" | "contain"
   link?: string
   featured?: boolean
 }
@@ -226,7 +229,8 @@ export const projects: Project[] = [
     category: "IT",
     tags: ["Web Integration", "Collaboration"],
     year: "2026",
-    coverImage: "/projects/mp5-tip-web.jpg",
+    coverImage: "/projects/mp5-tip-web-v2.jpg",
+    coverFit: "contain",
     featured: false,
   },
 ]

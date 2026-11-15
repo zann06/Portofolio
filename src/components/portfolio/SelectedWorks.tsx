@@ -228,7 +228,11 @@ export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
                   >
                     {/* Project Visual */}
                     <div
-                      className={`relative h-40 sm:h-44 lg:h-48 overflow-hidden ${
+                      className={`relative overflow-hidden ${
+                        project.coverImage && project.coverFit === "contain"
+                          ? "h-44 sm:h-48 lg:h-52"
+                          : "h-40 sm:h-44 lg:h-48"
+                      } ${
                         project.category === "IT"
                           ? "bg-gradient-to-br from-it/20 via-card to-it/5"
                           : project.category === "ESPORTS"
@@ -238,13 +242,29 @@ export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
                     >
                       {project.coverImage ? (
                         <>
+                          {project.coverFit === "contain" && (
+                            <>
+                              <img
+                                src={asset(project.coverImage)}
+                                alt=""
+                                aria-hidden
+                                loading="lazy"
+                                className="absolute inset-0 size-full scale-110 object-cover blur-2xl opacity-50"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+                            </>
+                          )}
                           <img
                             src={asset(project.coverImage)}
                             alt={t(project.title)}
                             loading="lazy"
-                            className="absolute inset-0 size-full object-cover"
+                            className={`absolute inset-0 size-full transition-transform duration-500 group-hover:scale-[1.03] ${
+                              project.coverFit === "contain" ? "object-contain" : "object-cover"
+                            }`}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+                          {project.coverFit !== "contain" && (
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+                          )}
                         </>
                       ) : (
                         <>
@@ -382,7 +402,11 @@ export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
             >
               {/* Visual */}
               <div
-                className={`relative aspect-[16/8] overflow-hidden ${
+                className={`relative overflow-hidden ${
+                  selected.coverImage && selected.coverFit === "contain"
+                    ? "aspect-[4/3] sm:aspect-[16/10]"
+                    : "aspect-[16/8]"
+                } ${
                   selected.category === "IT"
                     ? "bg-gradient-to-br from-it/20 via-card to-it/5"
                     : selected.category === "ESPORTS"
@@ -402,6 +426,9 @@ export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
                       {t(selected.title).charAt(0)}
                     </span>
                   </div>
+                )}
+                {selected.coverImage && (
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/70 to-transparent" />
                 )}
                 <button
                   onClick={() => setSelected(null)}
