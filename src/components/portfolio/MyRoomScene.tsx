@@ -10,7 +10,7 @@ import {
   Headphones, Image as ImageIcon, Lamp, Laptop as LaptopIcon, Library, Monitor as MonitorIcon, Moon, Play, Radio, Settings,
   Sprout, Sun, Sunrise, Sunset, Utensils, type LucideIcon,
 } from "lucide-react"
-import { roomHotspots, hotspotPoints, type HotspotAnchor, type RoomHotspotId } from "@/data/room"
+import { roomHotspots, hotspotPoints, type RoomHotspotId } from "@/data/room"
 import { bi, useLang } from "@/lib/i18n"
 
 // "My Room.exe" — the hero diorama, rebuilt as a live 3D scene.
