@@ -1,13 +1,15 @@
 import { lazy, Suspense, useRef, useState } from "react"
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion"
-import { ArrowDown, ArrowUpRight } from "lucide-react"
+import { ArrowDown, MousePointerClick } from "lucide-react"
 import { useLang, bi } from "@/lib/i18n"
 import { scrollToSection } from "@/lib/smooth-scroll"
 import { CvDialog } from "@/components/portfolio/CvDialog"
+import { RoomPanel } from "@/components/portfolio/RoomPanel"
+import type { RoomHotspotId } from "@/data/room"
 
-// three.js (+R3F) is ~600KB, so the island loads as its own chunk after the
+// three.js (+R3F) is ~600KB, so the room loads as its own chunk after the
 // page is interactive — the hero renders instantly with a quiet placeholder.
-const IslandScene = lazy(() => import("@/components/portfolio/IslandScene"))
+const MyRoomScene = lazy(() => import("@/components/portfolio/MyRoomScene"))
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -37,6 +39,7 @@ const itemVariants = {
 export function Hero({ activeIdentity }: HeroProps) {
   const { t } = useLang()
   const [cvOpen, setCvOpen] = useState(false)
+  const [roomSpot, setRoomSpot] = useState<RoomHotspotId | null>(null)
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -73,7 +76,7 @@ export function Hero({ activeIdentity }: HeroProps) {
         style={{ y, opacity }}
         className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-16"
       >
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-12 xl:gap-16 items-center">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -215,12 +218,17 @@ export function Hero({ activeIdentity }: HeroProps) {
             initial={{ opacity: 0, scale: 0.96, x: 24 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
-            className="relative hidden lg:block"
+            className="relative"
           >
-            <Suspense fallback={<div className="aspect-[5/4] w-full animate-pulse rounded-2xl bg-muted/40" />}>
-              <IslandScene identity={activeIdentity} />
+            <Suspense fallback={<div className="aspect-[6/5] w-full animate-pulse rounded-2xl bg-muted/40" />}>
+              <MyRoomScene
+                identity={activeIdentity}
+                activeHotspot={roomSpot}
+                onOpenHotspot={(id) => setRoomSpot((prev) => (prev === id ? null : id))}
+              />
             </Suspense>
-            <div className="pointer-events-none absolute -top-4 -right-4 flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-lg backdrop-blur-md">
+
+            <div className="pointer-events-none absolute -top-2 right-0 flex items-center gap-2 rounded-full border border-border bg-card/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-lg backdrop-blur-md">
               <motion.span
                 className={`size-1.5 rounded-full ${activeIdentity === "IT" ? "bg-it" : "bg-esports"}`}
                 animate={{ backgroundColor: activeIdentity === "IT" ? "var(--it)" : "var(--esports)" }}
@@ -238,20 +246,40 @@ export function Hero({ activeIdentity }: HeroProps) {
                 </motion.span>
               </AnimatePresence>
             </div>
-            <div className="absolute -bottom-5 -left-5">
-              <div className="rounded-xl border border-border bg-card/90 px-4 py-3 shadow-xl backdrop-blur-md">
-                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                  {t(bi("Drag to orbit", "Geser untuk memutar"))}
-                </div>
-                <a
-                  href="https://zann06.github.io/TinyWorld/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-muted-foreground transition-colors"
-                >
-                  {t(bi("From TinyWorld — open demo", "Dari TinyWorld — buka demo"))} <ArrowUpRight className="size-3.5" />
-                </a>
-              </div>
+
+            {/* Interactive hint lives below the scene so it never covers the
+                diorama; it swaps for the contextual panel on click. */}
+            <div className="relative z-20 mt-2">
+              <AnimatePresence mode="wait" initial={false}>
+                {roomSpot ? (
+                  <motion.div
+                    key="panel"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <RoomPanel hotspot={roomSpot} onClose={() => setRoomSpot(null)} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="hint"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.2 }}
+                    className="rounded-xl border border-border bg-card/80 px-4 py-3"
+                  >
+                    <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                      <MousePointerClick className="size-3 shrink-0" />
+                      {t(bi("My Room.exe — drag, hover, click", "My Room.exe — geser, hover, klik"))}
+                    </div>
+                    <p className="mt-1 text-[13px] font-medium leading-snug text-foreground/80">
+                      {t(bi("Every object holds a piece of the story.", "Tiap objek menyimpan satu bagian cerita."))}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>
