@@ -157,6 +157,21 @@ export const projects: Project[] = [
     link: "https://github.com/zann06/Enskripsi-Block-Cipher",
     featured: true,
   },
+  {
+    id: "p8",
+    title: "FormaAI",
+    subtitle: bi("Template-driven report generation that refuses to invent facts", "Generator laporan berbasis template yang menolak mengarang fakta"),
+    description: bi(
+      "An open-source, self-hostable monorepo for generating reports from a real Word template plus your own sources. Template headings, styles, tables and page setup are analysed rather than flattened; passages are matched to sections with deterministic BM25 retrieval, then optionally refined by the model. A section with no supporting evidence gets an explicit [MISSING: …] or [PERLU DICEK: …] marker instead of an invented figure, and those markers survive into the export so you can find them in Word. Exports rewrite only word/document.xml, leaving every other part of the DOCX byte-identical. Built with Fastify 5, Drizzle, PostgreSQL, React 19, a database-backed job queue using FOR UPDATE SKIP LOCKED, and an AES-256-GCM credential vault bound to the owner — bring-your-own-key, with no central server and no telemetry. 456 tests across five workspaces.",
+      "Monorepo open-source dan self-hostable untuk menghasilkan laporan dari template Word asli plus sumber milik Anda sendiri. Heading, style, tabel, dan page setup template dianalisis, bukan diratakan jadi teks biasa; kutipan sumber dicocokkan ke bagian laporan dengan retrieval BM25 deterministik, lalu opsional diperhalus model. Bagian tanpa bukti pendukung mendapat penanda eksplisit [MISSING: …] atau [PERLU DICEK: …] alih-alih angka karangan, dan penanda itu tetap ada di hasil ekspor agar bisa dicari di Word. Ekspor hanya menulis ulang word/document.xml, sementara seluruh bagian lain DOCX tetap identik byte-per-byte. Dibangun dengan Fastify 5, Drizzle, PostgreSQL, React 19, job queue berbasis database dengan FOR UPDATE SKIP LOCKED, dan vault kredensial AES-256-GCM yang terikat ke pemiliknya — bring-your-own-key, tanpa server pusat dan tanpa telemetri. 456 tes di lima workspace."
+    ),
+    category: "IT",
+    tags: ["TypeScript", "Fastify", "DOCX"],
+    year: "2026",
+    coverImage: "/projects/p7-formaai.jpg",
+    link: "https://github.com/zann06/FormaAI",
+    featured: true,
+  },
   // ── Mini Proyek (smaller side projects) ─────────────────────────────────
   {
     id: "mp1",

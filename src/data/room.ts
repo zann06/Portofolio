@@ -85,6 +85,7 @@ export const roomHotspots: RoomHotspot[] = [
       bi("AksesAI — verified directory of free & cheap AI resources", "AksesAI — direktori terverifikasi resource AI gratis & murah"),
       bi("StudyHub — academic planner with push notifications", "StudyHub — planner akademik dengan notifikasi push"),
       bi("MindMesh — local-first knowledge graph in 3D", "MindMesh — knowledge graph local-first dalam 3D"),
+      bi("FormaAI — reports from your sources, no invented facts", "FormaAI — laporan dari sumber Anda, tanpa fakta karangan"),
     ],
     link: { label: bi("See selected works", "Lihat karya pilihan"), href: "#works" },
     tags: ["Next.js", "TypeScript", "Three.js"],
@@ -148,8 +149,8 @@ export const roomHotspots: RoomHotspot[] = [
     action: bi("View posters", "Lihat poster"),
     eyebrow: bi("Selected works", "Karya pilihan"),
     body: bi(
-      "Seven flagship projects and a handful of smaller ones — from a community AI resource directory to a browser-based 3D exploration game, a crypto lab for coursework, and the official site for a study program.",
-      "Tujuh proyek utama dan beberapa proyek kecil — dari direktori resource AI komunitas, game eksplorasi 3D di browser, lab kriptografi untuk kuliah, sampai situs resmi sebuah program studi."
+      "Eight flagship projects and a handful of smaller ones — from a community AI resource directory to a browser-based 3D exploration game, an open-source report generator that refuses to invent facts, a crypto lab for coursework, and the official site for a study program.",
+      "Delapan proyek utama dan beberapa proyek kecil — dari direktori resource AI komunitas, game eksplorasi 3D di browser, generator laporan open-source yang menolak mengarang fakta, lab kriptografi untuk kuliah, sampai situs resmi sebuah program studi."
     ),
     link: { label: bi("Open selected works", "Buka karya pilihan"), href: "#works" },
   },
