@@ -19,6 +19,10 @@ export interface Project {
   // How the cover fills its frame. "contain" keeps the whole diorama visible
   // (used for square-ish artwork); defaults to "cover".
   coverFit?: "cover" | "contain"
+  // Vertical focal point for a "cover" crop, as a CSS object-position value.
+  // Photos with heads near the top need something like "50% 32%" so the crop
+  // keeps the faces instead of cutting them off.
+  coverPosition?: string
   link?: string
   featured?: boolean
 }
@@ -244,8 +248,26 @@ export const projects: Project[] = [
     category: "IT",
     tags: ["Web Integration", "Collaboration"],
     year: "2026",
-    coverImage: "/projects/mp5-tip-web-v2.jpg",
-    coverFit: "contain",
+    coverImage: "/projects/tip-kerjasama.jpeg",
+    coverPosition: "50% 34%",
+    featured: false,
+  },
+  {
+    id: "mp6",
+    title: bi("Desa Karang Sari — Village Portal & Letter Service", "Desa Karang Sari — Portal Desa & Layanan Surat"),
+    subtitle: bi(
+      "Official village website with an online letter-request service",
+      "Website resmi desa dengan layanan pengajuan surat online"
+    ),
+    description: bi(
+      "The official website for Desa Karang Sari, Kecamatan Jati Agung, Lampung Selatan — built so residents can find village information and submit an official letter request without coming to the office first. The letter service needs no account: you fill in one form, get an auto-generated reference number, and are notified via WhatsApp when the letter is ready. The portal also covers the village profile, news and agenda, local potential (UMKM, tourism, agriculture), and a contact map with service hours.",
+      "Website resmi Desa Karang Sari, Kecamatan Jati Agung, Lampung Selatan — dibangun agar warga bisa mencari informasi desa dan mengajukan permohonan surat resmi tanpa harus datang dulu ke kantor. Layanan suratnya tanpa akun: isi satu formulir, dapat nomor referensi otomatis, lalu diinformasikan via WhatsApp saat surat siap. Portal ini juga memuat profil desa, berita dan agenda, potensi lokal (UMKM, wisata, pertanian), serta peta kontak berikut jam pelayanan."
+    ),
+    category: "IT",
+    tags: ["Web Development", "E-Government", "Public Service"],
+    year: "2026",
+    coverImage: "/projects/mp6-karangsari.jpg",
+    link: "https://desa-karangsari.up.railway.app/",
     featured: false,
   },
 ]

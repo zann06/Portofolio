@@ -258,6 +258,7 @@ export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
                             src={asset(project.coverImage)}
                             alt={t(project.title)}
                             loading="lazy"
+                            style={{ objectPosition: project.coverPosition }}
                             className={`absolute inset-0 size-full transition-transform duration-500 group-hover:scale-[1.03] ${
                               project.coverFit === "contain" ? "object-contain" : "object-cover"
                             }`}
@@ -418,6 +419,7 @@ export function SelectedWorks({ identity }: { identity: "IT" | "ESPORTS" }) {
                   <img
                     src={asset(selected.coverImage)}
                     alt={t(selected.title)}
+                    style={{ objectPosition: selected.coverPosition ?? "50% 50%" }}
                     className="absolute inset-0 size-full object-cover"
                   />
                 ) : (
